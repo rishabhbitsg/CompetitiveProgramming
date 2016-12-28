@@ -1,0 +1,50 @@
+/*
+ID: your_id_here
+PROG: wormhole
+LANG: C++11                  (<-- or C++11 if you prefer)
+*/
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MAX_N 12
+int N, X[MAX_N + 1], Y[MAX_N + 1], partner[MAX_N + 1];
+
+bool cycle_exists() {
+  return true;
+}
+int solve() {
+  int total = 0;
+  // pair the first two unpaired wormhole
+  for (int i = 1; i <= N; i++) {
+    if (partner[i] == 0) break;
+  }
+
+  if (i > N) {
+    if (cycle_exists()) return 1;
+    return 0;
+  }
+  
+  for (int j = i + 1; j <= N; j++) {
+    if (partner[j] == 0) {
+      partner[j] = i;
+      partner[i] = j;
+      total += solve();
+      partner[i] = partner[j] = 0;
+    }
+  }
+  return total;
+}
+
+  
+int main() {
+    ofstream fout ("wormhole.out");
+    ifstream fin ("wormhole.in");
+
+    fin >> N;
+    for (int i = 1; i <= N; i++) {
+      fin >> X[i] >> X[j];
+    }
+
+    fout << solve() << endl;
+    return 0;
+}
